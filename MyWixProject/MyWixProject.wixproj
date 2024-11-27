@@ -1,0 +1,29 @@
+﻿<Project Sdk="WixToolset.Sdk/5.0.2">
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+        <DefineConstants>Debug</DefineConstants>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="WixToolset.Heat" Version="5.0.2" />
+    </ItemGroup>
+    <ItemGroup>
+
+        <ProjectReference Include="..\ConsoleApp\ConsoleApp.csproj" Publish="true">
+            <Name>ConsoleApp</Name>
+            <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
+            <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+            <Private>true</Private>
+        </ProjectReference>
+
+        <HarvestDirectory Include="$(IntermediateOutputPath)publish\ConsoleApp">
+            <ComponentGroupName>Product.Generated</ComponentGroupName>
+            <DirectoryRefId>INSTALLFOLDER</DirectoryRefId>
+            <SuppressRootDirectory>True</SuppressRootDirectory>
+            <SuppressRegistry>True</SuppressRegistry>
+            <Transforms>filter.xslt</Transforms>
+        </HarvestDirectory>
+
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="filter.xslt" />
+    </ItemGroup>
+</Project>
